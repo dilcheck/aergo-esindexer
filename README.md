@@ -43,8 +43,8 @@ tx       string      tx in which name was updated
 
 You need Glide to install dependencies.
 
-    go get github.com/aergoio/aergo-esindexer
-    cd $GOPATH/src/github.com/aergoio/aergo-esindexer
+    go get github.com/dilcheck/aergo-esindexer
+    cd $GOPATH/src/github.com/dilcheck/aergo-esindexer
     make all
 
 ## Usage

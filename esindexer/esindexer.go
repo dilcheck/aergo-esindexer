@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aergoio/aergo-esindexer/types"
+	"github.com/dilcheck/aergo-esindexer/types"
 	"github.com/aergoio/aergo-lib/log"
 	"github.com/mr-tron/base58/base58"
 	"github.com/olivere/elastic"

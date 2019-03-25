@@ -7,8 +7,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/aergoio/aergo-esindexer/esindexer"
-	"github.com/aergoio/aergo-esindexer/types"
+	"github.com/dilcheck/aergo-esindexer/esindexer"
+	"github.com/dilcheck/aergo-esindexer/types"
 	"github.com/aergoio/aergo-lib/log"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"

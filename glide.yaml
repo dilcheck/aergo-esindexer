@@ -1,5 +1,5 @@
-package: github.com/aergoio/aergo-esindexer
-homepage: https://github.com/aergoio/aergo-esindexer
+package: github.com/dilcheck/aergo-esindexer
+homepage: https://github.com/dilcheck/aergo-esindexer
 license: MIT
 import:
 - package: github.com/olivere/elastic

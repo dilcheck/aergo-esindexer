@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/aergoio/aergo-esindexer/types"
+	"github.com/dilcheck/aergo-esindexer/types"
 	"github.com/mr-tron/base58/base58"
 )
 
