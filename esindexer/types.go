@@ -42,7 +42,7 @@ type EsTx struct {
 	Recipient string    `json:"to"`
 	Amount    string    `json:"amount"` // string of BigInt
 	Type      string    `json:"type"`
-	Payload0  string    `json:"payload0"` // first byte of payload
+	Payload  string    `json:"payload"` // first byte of payload
 }
 
 // EsName is a name-address mapping stored in elasticsearch
@@ -79,9 +79,9 @@ func ConvTx(tx *types.Tx) EsTx {
 	account := encodeAccount(tx.Body.Account)
 	recipient := encodeAccount(tx.Body.Recipient)
 	amount := big.NewInt(0).SetBytes(tx.GetBody().Amount).String()
-	payload0 := ""
+	payload := ""
 	if len(tx.Body.Payload) > 0 {
-		payload0 = fmt.Sprintf("%d", tx.Body.Payload[0])
+		payload = fmt.Sprintf("%s", string(tx.Body.Payload))
 	}
 	doc := EsTx{
 		BaseEsType: &BaseEsType{base58.Encode(tx.Hash)},
@@ -89,7 +89,7 @@ func ConvTx(tx *types.Tx) EsTx {
 		Recipient:  recipient,
 		Amount:     amount,
 		Type:       fmt.Sprintf("%d", tx.Body.Type),
-		Payload0:   payload0,
+		Payload:   payload,
 	}
 	return doc
 }

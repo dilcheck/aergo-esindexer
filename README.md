@@ -26,7 +26,7 @@ from     string
 to       string
 amount   string
 type     string      "0" or "1"
-payload0 byte        first byte of payload
+payload  byte        payload
 ```
 
 Names
