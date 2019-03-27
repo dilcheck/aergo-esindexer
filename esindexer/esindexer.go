@@ -337,12 +337,12 @@ func (ns *EsIndexer) UpdateLastBlockHeightFromDb() {
 // IndexBlock indexes one block
 func (ns *EsIndexer) IndexBlock(block *types.Block) {
 	ctx := context.Background()
-	esBlock := ConvBlock(block)
-	put, err := ns.client.Index().Index(ns.indexNamePrefix + "block").Type("block").Id(esBlock.id).BodyJson(esBlock).Do(ctx)
-	if err != nil {
-		ns.log.Warn().Err(err).Msg("Failed to index block")
-		return
-	}
+	// esBlock := ConvBlock(block)
+	// put, err := ns.client.Index().Index(ns.indexNamePrefix + "block").Type("block").Id(esBlock.id).BodyJson(esBlock).Do(ctx)
+	// if err != nil {
+	// 	ns.log.Warn().Err(err).Msg("Failed to index block")
+	// 	return
+	// }
 
 	if len(block.Body.Txs) > 0 {
 		txChannel := make(chan EsType)
@@ -366,7 +366,8 @@ func (ns *EsIndexer) IndexBlock(block *types.Block) {
 
 	}
 
-	ns.log.Info().Uint64("blockNo", block.Header.BlockNo).Int("txs", len(block.Body.Txs)).Str("blockHash", put.Id).Msg("Indexed block")
+	// ns.log.Info().Uint64("blockNo", block.Header.BlockNo).Int("txs", len(block.Body.Txs)).Str("blockHash", put.Id).Msg("Indexed block")
+	ns.log.Info().Uint64("blockNo", block.Header.BlockNo).Int("txs", len(block.Body.Txs)).Msg("Indexed block")
 }
 
 // IndexBlocksInRange indexes blocks in the range of [fromBlockheight, toBlockHeight]
@@ -428,6 +429,13 @@ func (ns *EsIndexer) IndexTxs(block *types.Block, txs []*types.Tx, channel chan 
 		d := ConvTx(tx)
 		d.Timestamp = blockTs
 		d.BlockNo = block.Header.BlockNo
+		
+		if (!strings.HasPrefix(d.Payload, "52CT")) {
+			close(channel)
+			close(nameChannel)
+			return
+		}
+
 		channel <- d
 
 		if tx.GetBody().GetType() == types.TxType_GOVERNANCE && string(tx.GetBody().GetRecipient()) == "aergo.name" {
