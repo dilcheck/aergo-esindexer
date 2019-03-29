@@ -44,6 +44,12 @@ func BulkIndexer(ctx context.Context, logger *log.Logger, client *elastic.Client
 		bulk := client.Bulk().Index(indexName).Type(typeName)
 		for d := range channel {
 			atomic.AddUint64(&total, 1)
+
+			// save only transaction
+			if (typeName != "tx") {
+				return nil
+			}
+
 			if upsert {
 				bulk.Add(elastic.NewBulkIndexRequest().Id(d.GetID()).Doc(d))
 			} else {
